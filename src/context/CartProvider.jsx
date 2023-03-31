@@ -18,7 +18,14 @@ const CartProvider = ({ children }) => {
   }, []);
 
   const addToCart = (item) => {
-    setCartItems([...cartItems, item]);
+    const index = cartItems.findIndex((cartItem) => cartItem.id === item.id);
+    if (index !== -1) {
+      const newCartItems = [...cartItems];
+      newCartItems[index] = { ...newCartItems[index] };
+      setCartItems(newCartItems);
+    } else {
+      setCartItems([...cartItems, { ...item }]);
+    }
   };
   const removeFromCart = (item) => {
     setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id));
@@ -40,18 +47,3 @@ const CartProvider = ({ children }) => {
 };
 
 export default CartProvider;
-
-
-
-
-
-
-// const index = cartItems.findIndex((cartItem) => cartItem.id === item.id);
-// if (index !== -1) {
-//   const newCartItems = [...cartItems];
-//   newCartItems[index] = { ...newCartItems[index]};
-//   setCartItems(newCartItems);
-// }
-// else {
-//   setCartItems([...cartItems, { ...item }]);
-// }
